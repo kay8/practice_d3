@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>D3.js</title>
+	<style>
+		div.bar {
+			display: inline-block;
+			background-color: teal;
+			width: 20px;
+			height: 75px;
+		}
+	</style>
+</head>
+<body>
+
+	<script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+	<script>
+		var dataset = [];
+		for (var i = 0; i < 20; i++) {
+			var randomNum = Math.floor(Math.random() * 30 + 1);
+			dataset.push(randomNum);
+		}
+
+
+/*		d3.select("body").selectAll("div")
+			.data(dataset)
+			.enter()
+			.append("div")
+			.attr("class", "bar")
+			.style({
+				"height": function(d) {
+					var barHeight = d * 10;
+					return barHeight + "px";
+				},
+				"margin-right": "2px"
+			});*/
+
+		var w = 500,
+			h = 100,
+			barPadding = 1;
+
+		var svg = d3.select("body")
+					.append("svg")
+					.attr({
+						width: w,
+						height: h
+					});
+
+		svg.selectAll("rect")
+			.data(dataset)
+			.enter()
+			.append("rect")
+			.attr({
+				x: function(d, i) {return i * (w / dataset.length)},
+				y: function(d) {return h - d * 4 + 10},
+				width: w / dataset.length - barPadding,
+				height: function(d) {return d * 4 + 10},
+				fill: function(d) {return "rgb(0, 0, " + (d * 10) + ")"}
+			});
+
+		svg.selectAll("text")
+			.data(dataset)
+			.enter()
+			.append("text")
+			.text(function(d) {return d})
+			.attr({
+				"text-anchor": "middle",
+				x: function(d, i) {return i * (w / dataset.length) + (w / dataset.length - barPadding) / 2},
+				y: function(d) {return h - (d * 4) + 10 + 15},
+				fill: "#fff",
+				"font-size": "10px"
+			});
+
+
+
+
+
+
+
+	</script>
+</body>
+</html>

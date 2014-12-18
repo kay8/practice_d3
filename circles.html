@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>D3.js</title>
+	<style>
+
+	</style>
+</head>
+<body>
+
+	<script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+	<script>
+
+		var w = 500;
+		var	h = 50;
+		var dataset2 = [5, 10, 15, 20, 25];
+
+		var svg = d3.select("body").append("svg").attr({
+			width: w,
+			height: h
+		});
+
+		var circles = svg.selectAll("circle")
+				.data(dataset2)
+				.enter()
+				.append("circle");
+
+		circles.attr({
+			cx: function(d, i) {
+				return (i * 50) + 25;
+			},
+			cy: h/2,
+			r: function(d) {
+				return d;
+			}
+		});
+
+
+
+
+
+
+	</script>
+</body>
+</html>

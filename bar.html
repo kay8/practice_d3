@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>D3.js</title>
+	<style>
+		div.bar {
+			display: inline-block;
+			background-color: teal;
+			width: 20px;
+			height: 75px;
+		}
+	</style>
+</head>
+<body>
+
+	<script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+	<script>
+		var dataset = [];
+		for (var i = 0; i < 30; i++) {
+			var randomNum = Math.floor(Math.random() * 30 + 1);
+			dataset.push(randomNum);
+		}
+
+
+		d3.select("body").selectAll("div")
+			.data(dataset)
+			.enter()
+			.append("div")
+			.attr("class", "bar")
+			.style({
+				"height": function(d) {
+					var barHeight = d * 10;
+					return barHeight + "px";
+				},
+				"margin-right": "2px"
+			});
+
+
+
+
+
+
+
+	</script>
+</body>
+</html>
