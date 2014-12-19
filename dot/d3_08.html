@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>D3.js</title>
+</head>
+<body>
+	<p>hello 1</p>
+	<p>hello 2</p>
+	<p>hello 3</p>
+
+	<ul>
+		<li>hi 1</li>
+		<li>hi 2</li>
+		<li>hi 3</li>
+	</ul>
+	<script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+	<script>
+		var dataset = [12, 99, 22, 88];
+		var p = d3.select("body").selectAll("p");
+
+		var dataset2 = [11, 33];
+		var li = d3.select("body").selectAll("li");
+
+		/*dataを使った瞬間に仮想領域が作られる
+		update: 対応する要素がある場合 > text, style等の操作へ
+		enter: 対応する要素が足りない場合 > appendで要素を追加
+		exit: 対応する要素が余る場合 > removeで要素削除*/
+
+		var update = p.data(dataset);
+		var enter = update.enter();
+
+		update.text(function(d){
+			return "update: " + d;
+		});
+
+		enter.append("p").text(function(d){
+			return "enter: " + d;
+		});
+
+
+		var update2 = li.data(dataset2);
+		var exit = update2.exit();
+
+		update2.text(function(d){
+			return "exit: " + d;
+		});
+		exit.style("color", "red");
+
+
+	</script>
+</body>
+</html>

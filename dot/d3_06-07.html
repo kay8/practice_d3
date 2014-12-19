@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>D3.js</title>
+</head>
+<body>
+	<p>hello 1</p>
+	<p>hello 2</p>
+	<p>hello 3</p>
+	<script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+	<script>
+		var dataset = [12, 99, 22, 88];
+		var p = d3.select("body").selectAll("p");
+
+		dataを使った瞬間に仮想領域が作られる
+		update: 対応する要素がある場合 > text, style等の操作へ
+		enter: 対応する要素が足りない場合 > appendで要素を追加
+		update: 対応する要素が余る場合 > removeで要素削除
+
+
+	</script>
+</body>
+</html>
