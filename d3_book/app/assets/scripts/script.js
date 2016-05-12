@@ -1,7 +1,6 @@
 (function() {
 
-  var data = [300, 130, 5, 60, 240],
-      data2 = [200, 110, 50, 250, 10];
+  var data = [300, 130, 5, 60, 240];
 
   d3.select("#practice1")
     .selectAll("rect")
@@ -15,17 +14,23 @@
       height: "20px"
     });
 
-  d3.select(".js-update")
-    .on('click', function() {
+  d3.select(".js-update").on('click', function() {
 
-      d3.select("#practice1")
-        .selectAll("rect")
-        .data(data2)
-        .attr({
-          width: function(d,i) {return d + "px";}
-        });
+    var i,
+        dataNum = data.length;
+    for (i = 0; i < dataNum; i++) {
+      data[i] = Math.floor(Math.random() * 320);
+    }
 
-    });
+    d3.select("#practice1")
+      .selectAll("rect")
+      .data(data)
+      .transition()
+      .attr({
+        width: function(d,i) {return d + "px";}
+      });
+
+  });
 
 }());
 
