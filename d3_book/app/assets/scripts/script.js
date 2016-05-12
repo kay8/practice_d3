@@ -10,8 +10,16 @@
     .attr({
       x: 0,
       y: function(d,i) {return i * 25;},
-      width: function(d,i) {return d + "px";},
+      width: "0px",
       height: "20px"
+    })
+    .transition()
+    .delay(function(d,i) {
+      return i * 500;
+    })
+    .duration(500)
+    .attr({
+      width: function(d,i) {return d + "px";}
     });
 
   d3.select(".js-update").on('click', function() {
