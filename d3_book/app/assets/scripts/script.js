@@ -22,6 +22,22 @@
       width: function(d,i) {return d + "px";}
     });
 
+  // d3.select("#practice1")
+  //   .selectAll("rect")
+  //   .data(data)
+  //   .enter()
+  //   .append("rect")
+  //   .attr({
+  //     x: 0,
+  //     y: function(d,i) {return i * 25;},
+  //     width: function(d,i) {return d + "px";},
+  //     height: "20px"
+  //   })
+  //   .on('click', function() {
+  //     d3.select(this)
+  //       .style("fill", "cyan");
+  //   });
+
   d3.select(".js-update").on('click', function() {
 
     var i,
