@@ -17,7 +17,7 @@
       .enter()
       .append("rect")
       .attr({
-        x: 0,
+        x: 10,
         y: function(d,i) {return i * 25;},
         width: "0px",
         height: "20px"
@@ -30,6 +30,22 @@
       .attr({
         width: function(d,i) {return d + "px";}
       });
+
+    var xScale = d3.scale.linear()
+        .domain([0, 300])
+        .range([0, 300]);
+
+    d3.select("#practice1")
+      .append("g")
+      .attr({
+        class: "axis",
+        transform: "translate(10, " + ((1 + data1.length) * 20 + 5) + ")"
+      })
+
+      .call(d3.svg.axis()
+        .scale(xScale)
+        .orient("bottom")
+      );
 
   });
 

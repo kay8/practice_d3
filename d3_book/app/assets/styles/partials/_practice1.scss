@@ -1,6 +1,8 @@
+body {
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
 h1 {
   color: #333;
-  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 // http://codepen.io/sebj54/pen/oxluI
 .btn {
@@ -50,3 +52,15 @@ h1 {
     fill: #76A7FA;
   }
 }
+
+.axis {
+  text {
+    font-size: 12px;
+  }
+  path,
+  line {
+    fill: none;
+    stroke: #000;
+  }
+}
+
