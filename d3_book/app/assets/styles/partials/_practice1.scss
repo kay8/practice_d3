@@ -4,6 +4,10 @@ body {
 h1 {
   color: #333;
 }
+.btn-group .btn {
+  display: inline-block;
+}
+
 // http://codepen.io/sebj54/pen/oxluI
 .btn {
   position: relative;
@@ -51,6 +55,12 @@ h1 {
     stroke: none;
     fill: #76A7FA;
   }
+}
+
+
+.bar {
+  stroke: none;
+  fill: #76A7FA;
 }
 
 .axis {

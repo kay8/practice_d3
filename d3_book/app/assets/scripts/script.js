@@ -1,3 +1,5 @@
+// = = = = = = = = = = = = = = = = = = = = = =
+// section 2
 (function() {
 
   var dataset = [];
@@ -73,6 +75,61 @@
       });
 
   });
+
+}());
+
+// = = = = = = = = = = = = = = = = = = = = = =
+// section6
+(function() {
+
+
+
+  d3.selectAll("button").on('click', function() {
+    var csvFile = this.getAttribute("data-src"),
+        barElements;
+
+    d3.csv(csvFile, function(error, data) {
+      var dataSet = [];
+      for (var i = 0; i < data.length; i++) {
+        dataSet.push(data[i].item1);
+      }
+
+      barElements = d3.select("#graph-area")
+        .selectAll("rect")
+        .data(dataSet);
+
+      barElements.enter()
+        .append("rect")
+        .attr({
+          class: "bar",
+          width: function(d,i) {
+            return d;
+          },
+          height: 20,
+          x: 0,
+          y: function(d,i) {
+            return i * 25;
+          }
+        });
+
+      barElements
+        .attr({
+          width: function(d,i) {
+            return d;
+          }
+        });
+
+
+
+    });
+  });
+
+
+
+
+
+
+
 
 }());
 
