@@ -119,6 +119,10 @@
           }
         });
 
+      barElements
+        .exit()
+        .remove();
+
 
 
     });
