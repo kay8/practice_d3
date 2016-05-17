@@ -127,18 +127,40 @@
       barElements
         .exit()
         .remove();
-
-
-
     });
   });
+}());
 
 
+// = = = = = = = = = = = = = = = = = = = = = =
+// section7
+(function() {
 
+  var svgHeight = 240,
+      barElements,
+      dataSet = [120, 70, 175, 80, 220];
 
+  // render
+  barElements = d3.select("#graph7")
+    .selectAll("rect")
+    .data(dataSet);
 
-
+  // add data
+  barElements.enter()
+    .append("rect")
+    .attr({
+      class: "bar",
+      width: 20,
+      height: function(d,i) {
+        return d;
+      },
+      x: function(d,i) {
+        return i * 25;
+      },
+      y: function(d,i) {
+        return svgHeight - d;
+      }
+    });
 
 
 }());
-
