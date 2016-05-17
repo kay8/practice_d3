@@ -102,17 +102,22 @@
         .append("rect")
         .attr({
           class: "bar",
-          width: function(d,i) {
-            return d;
-          },
+          width: 0,
           height: 20,
           x: 0,
           y: function(d,i) {
             return i * 25;
           }
+        })
+        .transition()
+        .attr({
+          width: function(d,i) {
+            return d;
+          }
         });
 
       barElements
+        .transition()
         .attr({
           width: function(d,i) {
             return d;
