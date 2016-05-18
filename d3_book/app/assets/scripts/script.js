@@ -158,8 +158,22 @@
         return i * 25;
       },
       y: function(d,i) {
+        console.log(svgHeight - d);
         return svgHeight - d;
       }
+    });
+
+  barElements.enter()
+    .append("text")
+    .attr({
+      class: "barNum",
+      x: function(d,i) {
+        return i * 25 + 10;
+      },
+      y: svgHeight - 5
+    })
+    .text(function(d,i) {
+      return d;
     });
 
 
