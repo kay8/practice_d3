@@ -138,7 +138,7 @@
 
   var svgHeight = 240,
       offsetX = 30,
-      offsetY = 10,
+      offsetY = 20,
       barElements,
       dataSet = [120, 70, 175, 80, 220];
 
@@ -192,7 +192,36 @@
       d3.svg.axis()
       .scale(yScale)
       .orient("left")
+      .ticks(10) // default axis space: 10
+      .tickValues([10, 20, 50, 100, 150, 200])
+      //.tickFormat(d3.format(".2f"))
     );
+
+  // vertical line
+  d3.select("#graph7")
+    .append("rect")
+    .attr({
+      class: "axis_x",
+      width: 320,
+      height: 1,
+      transform: "translate(" + offsetX + ", " +  (svgHeight - offsetY) + ")"
+    });
+
+  // display label
+  barElements.enter()
+    .append("text")
+    .attr({
+      class: "barName",
+      x: function(d,i) {
+        return i * 25 + 10 + offsetX;
+      },
+      y: svgHeight - offsetY + 15
+    })
+    .text(function(d,i) {
+      return ["A", "B", "C", "D", "E"][i];
+    });
+
+
 
 
 }());
