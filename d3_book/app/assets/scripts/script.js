@@ -183,6 +183,7 @@
         .range([300, 0]);
 
   d3.select("#graph7")
+    .append("g")
     .attr({
       class: "axis",
       transform: "translate(" + offsetX + ", " +  ((svgHeight - 300) - offsetY) + ")"
