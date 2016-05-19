@@ -137,6 +137,8 @@
 (function() {
 
   var svgHeight = 240,
+      offsetX = 30,
+      offsetY = 10,
       barElements,
       dataSet = [120, 70, 175, 80, 220];
 
@@ -155,11 +157,10 @@
         return d;
       },
       x: function(d,i) {
-        return i * 25;
+        return i * 25 + offsetX;
       },
       y: function(d,i) {
-        console.log(svgHeight - d);
-        return svgHeight - d;
+        return svgHeight - d - offsetY;
       }
     });
 
@@ -168,13 +169,29 @@
     .attr({
       class: "barNum",
       x: function(d,i) {
-        return i * 25 + 10;
+        return i * 25 + 10 + offsetX;
       },
-      y: svgHeight - 5
+      y: svgHeight - 5 - offsetY
     })
     .text(function(d,i) {
       return d;
     });
+
+  // display axis
+  var yScale = d3.scale.linear()
+        .domain([0, 300])
+        .range([300, 0]);
+
+  d3.select("#graph7")
+    .attr({
+      class: "axis",
+      transform: "translate(" + offsetX + ", " +  ((svgHeight - 300) - offsetY) + ")"
+    })
+    .call(
+      d3.svg.axis()
+      .scale(yScale)
+      .orient("left")
+    );
 
 
 }());
