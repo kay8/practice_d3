@@ -168,7 +168,10 @@
       }
     })
     .transition()
-    .duration(3000)
+    .duration(1000)
+    .delay(function(d,i) {
+      return i * 100;
+    })
     .attr({
       height: function(d,i) {
         return d;
