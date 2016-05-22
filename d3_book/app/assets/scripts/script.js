@@ -167,6 +167,14 @@
         return svgHeight - offsetY;
       }
     })
+    .on("mouseover", function() {
+      d3.select(this)
+        .style("fill", "teal");
+    })
+    .on("mouseenter", function() {
+      d3.select(this)
+        .style("fill", "indigo");
+    })
     .transition()
     .duration(1000)
     .delay(function(d,i) {
