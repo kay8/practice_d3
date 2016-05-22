@@ -1,3 +1,4 @@
+
 // = = = = = = = = = = = = = = = = = = = = = =
 // section 2
 (function() {
@@ -136,11 +137,16 @@
 // section7
 (function() {
 
-  var svgHeight = 240,
+  var svgWidth = 320,
+      svgHeight = 240,
       offsetX = 30,
       offsetY = 20,
       barElements,
-      dataSet = [120, 70, 175, 80, 220];
+      dataSet = [120, 70, 175, 80, 220, 40, 180, 70, 90],
+      dataMax = 300,
+      barWidth = 20,
+      barMargin = 5;
+
 
   // render
   barElements = d3.select("#graph7")
@@ -152,12 +158,12 @@
     .append("rect")
     .attr({
       class: "bar",
-      width: 20,
+      width: barWidth,
       height: function(d,i) {
         return d;
       },
       x: function(d,i) {
-        return i * 25 + offsetX;
+        return i * (barWidth + barMargin) + offsetX;
       },
       y: function(d,i) {
         return svgHeight - d - offsetY;
@@ -169,7 +175,7 @@
     .attr({
       class: "barNum",
       x: function(d,i) {
-        return i * 25 + 10 + offsetX;
+        return i * (barWidth + barMargin) + 10 + offsetX;
       },
       y: svgHeight - 5 - offsetY
     })
@@ -179,8 +185,8 @@
 
   // display axis
   var yScale = d3.scale.linear()
-        .domain([0, 300])
-        .range([300, 0]);
+        .domain([0, dataMax])
+        .range([dataMax, 0]);
 
   d3.select("#graph7")
     .append("g")
@@ -218,7 +224,7 @@
       y: svgHeight - offsetY + 15
     })
     .text(function(d,i) {
-      return ["A", "B", "C", "D", "E"][i];
+      return ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L"][i];
     });
 
 
