@@ -159,11 +159,19 @@
     .attr({
       class: "bar",
       width: barWidth,
-      height: function(d,i) {
-        return d;
-      },
+      height: 0,
       x: function(d,i) {
         return i * (barWidth + barMargin) + offsetX;
+      },
+      y: function(d,i) {
+        return svgHeight - offsetY;
+      }
+    })
+    .transition()
+    .duration(3000)
+    .attr({
+      height: function(d,i) {
+        return d;
       },
       y: function(d,i) {
         return svgHeight - d - offsetY;
