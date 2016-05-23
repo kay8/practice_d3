@@ -287,38 +287,70 @@
       svgHeight = parseFloat(svgHeight);
 
     var pie = d3.layout.pie();
-    var arc = d3.svg.arc().innerRadius(0).outerRadius(100);
+    var arc = d3.svg.arc().innerRadius(30).outerRadius(100);
 
     var pieElements = d3.select("#graph8")
-        .selectAll("path")
-        .data(pie(dataSet));
+        .selectAll("g")
+        .data(pie(dataSet))
+        .enter()
+        .append("g")
+        .attr({
+          transform: "translate(" + svgWidth/2 + ", " + svgHeight/2 + ")"
+        });
 
-    pieElements.enter()
+    pieElements
       .append("path")
       .attr({
-        class: "pie",
-        //d: arc,
-        transform: "translate(" + svgWidth/2 + ", " + svgHeight/2 + ")"
+        class: "pie"
       })
       .style({
         fill: function(d,i) {return colour(i);}
       })
       .transition()
-      .duration(1000)
+      .duration(400)
       .delay(function(d,i) {
-        return i * 1000;
+        return i * 400;
       })
       .ease("linear")
       .attrTween("d", function(d,i) {
         var interpolate = d3.interpolate(
-          {startAngle: d.startAngle, endAngle: d.startAngle},
-          {startAngle: d.startAngle, endAngle: d.endAngle}
+          { startAngle: d.startAngle, endAngle: d.startAngle },
+          { startAngle: d.startAngle, endAngle: d.endAngle }
         );
         return function(t) {
           return arc(interpolate(t));
         };
       });
 
+    // total and text
+    var textElements = d3.select("#graph8")
+      .append("text")
+      .attr({
+        class: "total",
+        transform: "translate(" + svgWidth/2 + ", " + (svgHeight/2 + 5) + ")"
+      })
+      .text("Total: " + d3.sum(dataSet));
+
+    pieElements
+      .append("text")
+      .attr({
+        class: "pieNum",
+        transform: function(d,i) {
+          return "translate(" + arc.centroid(d) + ")";
+        },
+        opacity: 0
+      })
+      .transition()
+      .duration(400)
+      .delay(function(d,i) {
+        return i * 400;
+      })
+      .attr({
+        opacity: 1
+      })
+      .text(function(d,i) {
+        return d.value;
+      });
   }
 
 }());
