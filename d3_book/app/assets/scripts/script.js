@@ -137,131 +137,173 @@
 // section7
 (function() {
 
-  d3.csv("assets/data/sec7_data.csv", function(error, data) {
-    var dataSet = [],
-        labelName = [];
-    for (var i in data[0]) {
-      dataSet.push(data[0][i]);
-      labelName.push(i);
-    }
+  var svgEle = document.getElementById("graph7");
+  if (svgEle !== null) {
 
-    var svgEle = document.getElementById("graph7"),
-        svgCS = window.getComputedStyle(svgEle, null),
+
+    d3.csv("assets/data/sec7_data.csv", function(error, data) {
+      var dataSet = [],
+          labelName = [];
+      for (var i in data[0]) {
+        dataSet.push(data[0][i]);
+        labelName.push(i);
+      }
+
+      var svgCS = window.getComputedStyle(svgEle, null),
+          svgWidth = svgCS.getPropertyValue("width"),
+          svgHeight = svgCS.getPropertyValue("height"),
+          offsetX = 30,
+          offsetY = 20,
+          barElements,
+          barWidth = 20,
+          barMargin = 5,
+          dataMax = dataSet.length * (barWidth + barMargin) + offsetX;
+
+        svgWidth = parseFloat(svgWidth);
+        svgHeight = parseFloat(svgHeight);
+
+
+      // render
+      barElements = d3.select("#graph7")
+        .selectAll("rect")
+        .data(dataSet);
+
+      // add data
+      barElements.enter()
+        .append("rect")
+        .attr({
+          class: "bar",
+          width: barWidth,
+          height: 0,
+          x: function(d,i) {
+            return i * (barWidth + barMargin) + offsetX;
+          },
+          y: function(d,i) {
+            return svgHeight - offsetY;
+          }
+        })
+        .on("mouseover", function() {
+          d3.select(this)
+            .transition()
+            .duration(200)
+            .style("fill", "teal");
+        })
+        .on("mouseout", function() {
+          d3.select(this)
+            .transition()
+            .duration(200)
+            .style("fill", "indigo");
+        })
+        .transition()
+        .duration(1000)
+        .delay(function(d,i) {
+          return i * 100;
+        })
+        .attr({
+          height: function(d,i) {
+            return d;
+          },
+          y: function(d,i) {
+            return svgHeight - d - offsetY;
+          }
+        });
+
+      barElements.enter()
+        .append("text")
+        .attr({
+          class: "barNum",
+          x: function(d,i) {
+            return i * (barWidth + barMargin) + 10 + offsetX;
+          },
+          y: svgHeight - 5 - offsetY
+        })
+        .text(function(d,i) {
+          return d;
+        });
+
+      // display axis
+      var yScale = d3.scale.linear()
+            .domain([0, dataMax])
+            .range([dataMax, 0]);
+
+      d3.select("#graph7")
+        .append("g")
+        .attr({
+          class: "axis",
+          transform: "translate(" + offsetX + ", " +  ((svgHeight - 300) - offsetY) + ")"
+        })
+        .call(
+          d3.svg.axis()
+          .scale(yScale)
+          .orient("left")
+          .ticks(10) // default axis space: 10
+          .tickValues([10, 20, 50, 100, 150, 200])
+          //.tickFormat(d3.format(".2f"))
+        );
+
+      // vertical line
+      d3.select("#graph7")
+        .append("rect")
+        .attr({
+          class: "axis_x",
+          width: 320,
+          height: 1,
+          transform: "translate(" + offsetX + ", " +  (svgHeight - offsetY) + ")"
+        });
+
+      // display label
+      barElements.enter()
+        .append("text")
+        .attr({
+          class: "barName",
+          x: function(d,i) {
+            return i * 25 + 10 + offsetX;
+          },
+          y: svgHeight - offsetY + 15
+        })
+        .text(function(d,i) {
+          return labelName[i];
+        });
+
+    });
+  }
+}());
+
+// = = = = = = = = = = = = = = = = = = = = = =
+// section8
+(function() {
+
+  var svgEle = document.getElementById("graph8");
+  if (svgEle !== null) {
+
+
+    var svgCS = window.getComputedStyle(svgEle, null),
         svgWidth = svgCS.getPropertyValue("width"),
         svgHeight = svgCS.getPropertyValue("height"),
-        offsetX = 30,
-        offsetY = 20,
-        barElements,
-        barWidth = 20,
-        barMargin = 5,
-        dataMax = dataSet.length * (barWidth + barMargin) + offsetX;
+        dataSet = [50, 30, 12, 9, 1],
+        colour = d3.scale.category10();
 
       svgWidth = parseFloat(svgWidth);
       svgHeight = parseFloat(svgHeight);
 
+    var pie = d3.layout.pie();
+    var arc = d3.svg.arc().innerRadius(0).outerRadius(100);
 
-    // render
-    barElements = d3.select("#graph7")
-      .selectAll("rect")
-      .data(dataSet);
+    var pieElements = d3.select("#graph8")
+        .selectAll("path")
+        .data(pie(dataSet));
 
-    // add data
-    barElements.enter()
-      .append("rect")
+    pieElements.enter()
+      .append("path")
       .attr({
-        class: "bar",
-        width: barWidth,
-        height: 0,
-        x: function(d,i) {
-          return i * (barWidth + barMargin) + offsetX;
-        },
-        y: function(d,i) {
-          return svgHeight - offsetY;
-        }
+        class: "pie",
+        d: arc,
+        transform: "translate(" + svgWidth/2 + ", " + svgHeight/2 + ")"
       })
-      .on("mouseover", function() {
-        d3.select(this)
-          .transition()
-          .duration(200)
-          .style("fill", "teal");
-      })
-      .on("mouseout", function() {
-        d3.select(this)
-          .transition()
-          .duration(200)
-          .style("fill", "indigo");
-      })
-      .transition()
-      .duration(1000)
-      .delay(function(d,i) {
-        return i * 100;
-      })
-      .attr({
-        height: function(d,i) {
-          return d;
-        },
-        y: function(d,i) {
-          return svgHeight - d - offsetY;
-        }
+      .style({
+        fill: function(d,i) {return colour(i);}
       });
 
-    barElements.enter()
-      .append("text")
-      .attr({
-        class: "barNum",
-        x: function(d,i) {
-          return i * (barWidth + barMargin) + 10 + offsetX;
-        },
-        y: svgHeight - 5 - offsetY
-      })
-      .text(function(d,i) {
-        return d;
-      });
-
-    // display axis
-    var yScale = d3.scale.linear()
-          .domain([0, dataMax])
-          .range([dataMax, 0]);
-
-    d3.select("#graph7")
-      .append("g")
-      .attr({
-        class: "axis",
-        transform: "translate(" + offsetX + ", " +  ((svgHeight - 300) - offsetY) + ")"
-      })
-      .call(
-        d3.svg.axis()
-        .scale(yScale)
-        .orient("left")
-        .ticks(10) // default axis space: 10
-        .tickValues([10, 20, 50, 100, 150, 200])
-        //.tickFormat(d3.format(".2f"))
-      );
-
-    // vertical line
-    d3.select("#graph7")
-      .append("rect")
-      .attr({
-        class: "axis_x",
-        width: 320,
-        height: 1,
-        transform: "translate(" + offsetX + ", " +  (svgHeight - offsetY) + ")"
-      });
-
-    // display label
-    barElements.enter()
-      .append("text")
-      .attr({
-        class: "barName",
-        x: function(d,i) {
-          return i * 25 + 10 + offsetX;
-        },
-        y: svgHeight - offsetY + 15
-      })
-      .text(function(d,i) {
-        return labelName[i];
-      });
-
-  });
+  }
 
 }());

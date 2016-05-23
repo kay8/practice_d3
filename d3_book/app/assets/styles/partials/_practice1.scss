@@ -74,12 +74,16 @@ h1 {
   }
 }
 
-.sec7 {
+.sec7,
+.sec8 {
   svg {
     width: 320px;
     height: 240px;
     border: 1px solid #eee;
   }
+}
+
+.sec7 {
   .barNum {
     font-size: 9px;
     text-anchor: middle;
@@ -103,6 +107,13 @@ h1 {
   .barName {
     font-size: 9px;
     text-anchor: middle;
+  }
+}
+
+.sec8 {
+  .pie {
+    fill: #FFC107;
+    stroke: #FFF8E1;
   }
 }
 
