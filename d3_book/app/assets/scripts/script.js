@@ -297,11 +297,26 @@
       .append("path")
       .attr({
         class: "pie",
-        d: arc,
+        //d: arc,
         transform: "translate(" + svgWidth/2 + ", " + svgHeight/2 + ")"
       })
       .style({
         fill: function(d,i) {return colour(i);}
+      })
+      .transition()
+      .duration(1000)
+      .delay(function(d,i) {
+        return i * 1000;
+      })
+      .ease("linear")
+      .attrTween("d", function(d,i) {
+        var interpolate = d3.interpolate(
+          {startAngle: d.startAngle, endAngle: d.startAngle},
+          {startAngle: d.startAngle, endAngle: d.endAngle}
+        );
+        return function(t) {
+          return arc(interpolate(t));
+        };
       });
 
   }
